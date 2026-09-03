@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mourya Sai Reddy N | Cybersecurity Portfolio</title>
+
+    <meta name="description"
+          content="Mourya Sai Reddy N — Cybersecurity portfolio featuring SOC, SIEM, Wazuh, threat hunting, Windows security and detection engineering.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #f4ead5;
+            font-family: Georgia, "Times New Roman", serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: #d4af69;
+            color: #050505;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .gold {
+            color: #d4af69;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+            padding: 22px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(5, 5, 5, 0.90);
+            backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid rgba(212, 175, 105, 0.18);
+        }
+
+        .logo {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .nav-links a {
+            color: #aaa294;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #d4af69;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 150px 8% 80px;
+
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 520px;
+            height: 520px;
+
+            border-radius: 50%;
+
+            background: rgba(212, 175, 105, 0.055);
+
+            filter: blur(110px);
+
+            right: -180px;
+            top: 12%;
+
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 5px;
+
+            margin-bottom: 28px;
+        }
+
+        .hero h1 {
+            font-size: clamp(52px, 9vw, 115px);
+
+            font-weight: normal;
+
+            line-height: 0.95;
+
+            letter-spacing: -4px;
+
+            color: #f7edda;
+
+            margin-bottom: 28px;
+        }
+
+        .hero h1 span {
+            color: #d4af69;
+            font-style: italic;
+        }
+
+        .hero h2 {
+            color: #9c9487;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            font-weight: normal;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 28px;
+        }
+
+        .hero p {
+            max-width: 680px;
+
+            color: #aaa294;
+
+            font-size: 18px;
+
+            margin-bottom: 40px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 24px;
+
+            border: 1px solid #d4af69;
+
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            background: #d4af69;
+            color: #050505;
+        }
+
+        .button-filled {
+            background: #d4af69;
+            color: #050505;
+        }
+
+        .button-filled:hover {
+            background: #efd39a;
+        }
+
+        /* ================= SECTIONS ================= */
+
+        section {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 110px 8%;
+        }
+
+        .section-label {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 13px;
+        }
+
+        .section-title {
+            color: #f5ead6;
+
+            font-size: clamp(36px, 5vw, 56px);
+
+            font-weight: normal;
+
+            line-height: 1.15;
+
+            margin-bottom: 30px;
+        }
+
+        .gold-line {
+            width: 70px;
+            height: 1px;
+
+            background: #d4af69;
+
+            margin-bottom: 40px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+        }
+
+        .about-text p {
+            color: #aaa294;
+
+            font-size: 17px;
+
+            margin-bottom: 20px;
+        }
+
+        .about-quote {
+            display: flex;
+            align-items: center;
+
+            border-left: 1px solid #d4af69;
+
+            padding-left: 30px;
+        }
+
+        .about-quote p {
+            color: #d8ccb5;
+
+            font-size: 26px;
+
+            font-style: italic;
+
+            line-height: 1.5;
+        }
+
+        /* ================= PROJECT ================= */
+
+        .project-card {
+            position: relative;
+
+            padding: 50px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(212,175,105,0.065),
+                    rgba(255,255,255,0.012)
+                );
+
+            border: 1px solid rgba(212,175,105,0.28);
+
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(212,175,105,0.045);
+
+            filter: blur(90px);
+
+            right: -150px;
+            top: -150px;
+
+            pointer-events: none;
+        }
+
+        .project-number {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 25px;
+        }
+
+        .project-card h3 {
+            max-width: 900px;
+
+            color: #f5ead6;
+
+            font-size: clamp(30px, 4vw, 48px);
+
+            font-weight: normal;
+
+            line-height: 1.15;
+
+            margin-bottom: 25px;
+        }
+
+        .project-card > p {
+            max-width: 820px;
+
+            color: #aaa294;
+
+            font-size: 17px;
+
+            margin-bottom: 30px;
+        }
+
+        .tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            color: #cbb98f;
+
+            border: 1px solid rgba(212,175,105,0.30);
+
+            padding: 7px 12px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            padding: 25px 0;
+
+            margin: 35px 0;
+
+            border-top: 1px solid rgba(212,175,105,0.20);
+
+            border-bottom: 1px solid rgba(212,175,105,0.20);
+        }
+
+        .stat {
+            text-align: center;
+
+            border-right: 1px solid rgba(212,175,105,0.15);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat strong {
+            display: block;
+
+            color: #d4af69;
+
+            font-size: 34px;
+
+            font-weight: normal;
+        }
+
+        .stat span {
+            color: #80786b;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        /* ================= FINDING ================= */
+
+        .finding {
+            margin: 30px 0;
+
+            padding: 25px;
+
+            background: rgba(212,175,105,0.035);
+
+            border: 1px solid rgba(212,175,105,0.22);
+        }
+
+        .finding-title {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 10px;
+        }
+
+        .finding p {
+            color: #c3b9a5;
+
+            margin: 0;
+        }
+
+        /* ================= SKILLS ================= */
+
+        .skills-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .skill {
+            padding: 30px;
+
+            border: 1px solid rgba(212,175,105,0.18);
+
+            transition: 0.3s;
+        }
+
+        .skill:hover {
+            border-color: #d4af69;
+
+            transform: translateY(-5px);
+        }
+
+        .skill-number {
+            color: #625b50;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .skill h4 {
+            color: #d8ccb5;
+
+            font-size: 20px;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+        }
+
+        .skill p {
+            color: #817a6e;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+        }
+
+        /* ================= APPROACH ================= */
+
+        .approach {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 35px;
+        }
+
+        .approach-item {
+            padding-top: 20px;
+
+            border-top: 1px solid #d4af69;
+        }
+
+        .approach-item h4 {
+            color: #e2d5bc;
+
+            font-size: 23px;
+
+            font-weight: normal;
+
+            margin-bottom: 12px;
+        }
+
+        .approach-item p {
+            color: #817a6e;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+        }
+
+        /* ================= CONTACT ================= */
+
+        .contact {
+            text-align: center;
+
+            padding-top: 130px;
+            padding-bottom: 130px;
+        }
+
+        .contact h2 {
+            color: #f5ead6;
+
+            font-size: clamp(42px, 6vw, 72px);
+
+            font-weight: normal;
+
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            max-width: 620px;
+
+            margin: auto;
+
+            margin-bottom: 35px;
+
+            color: #8f887c;
+        }
+
+        .contact-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 14px;
+
+            flex-wrap: wrap;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 30px;
+
+            border-top: 1px solid rgba(212,175,105,0.15);
+
+            text-align: center;
+
+            color: #5c564d;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            nav {
+                padding: 18px 6%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 140px 7% 80px;
+            }
+
+            section {
+                padding: 80px 7%;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+
+                gap: 35px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat {
+                padding: 15px 5px;
+            }
+
+            .stat:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat:nth-child(-n+2) {
+                padding-bottom: 20px;
+
+                border-bottom: 1px solid rgba(212,175,105,0.15);
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .approach {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 30px 22px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <div class="logo">
+        MOURYA SAI REDDY N
+    </div>
+
+    <div class="nav-links">
+
+        <a href="#about">ABOUT</a>
+
+        <a href="#project">PROJECT</a>
+
+        <a href="#skills">SKILLS</a>
+
+        <a href="#contact">CONTACT</a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            CYBERSECURITY • SOC • SIEM
+        </div>
+
+        <h1>
+            Mourya Sai<br>
+            <span>Reddy N</span>
+        </h1>
+
+        <h2>
+            Cybersecurity & SOC Enthusiast
+        </h2>
+
+        <p>
+            I explore the space between security events,
+            telemetry, and detection — with a focus on
+            understanding not only what a SIEM detects,
+            but what it can miss.
+        </p>
+
+        <div class="buttons">
+
+            <a
+                class="button button-filled"
+                href="#project">
+                Explore My Work
+            </a>
+
+            <a
+                class="button"
+                href="https://github.com/mouryareddy462"
+                target="_blank">
+                GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="section-label">
+        01 — About
+    </div>
+
+    <h2 class="section-title">
+        Security with<br>
+        <span class="gold">curiosity.</span>
+    </h2>
+
+    <div class="gold-line"></div>
+
+    <div class="about-grid">
+
+        <div class="about-text">
+
+            <p>
+                I am building hands-on cybersecurity experience
+                through practical SOC and SIEM projects.
+            </p>
+
+            <p>
+                My work focuses on security monitoring,
+                threat hunting, Windows security,
+                endpoint telemetry, detection engineering,
+                and security hardening.
+            </p>
+
+            <p>
+                I enjoy investigating the difference between
+                what actually happens on an endpoint and what
+                a security monitoring platform is able to observe.
+            </p>
+
+        </div>
+
+        <div class="about-quote">
+
+            <p>
+                “Not seeing an alert does not always mean
+                nothing happened.”
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECT ================= -->
+
+<section id="project">
+
+    <div class="section-label">
+        02 — Featured Project
+    </div>
+
+    <h2 class="section-title">
+        SOC <span class="gold">Blind Spot.</span>
+    </h2>
+
+    <div class="project-card">
+
+        <div class="project-number">
+            PROJECT / 001
+        </div>
+
+        <h3>
+            Automated Detection Coverage &
+            Telemetry Gap Assessment Platform
+        </h3>
+
+        <p>
+            A hands-on Wazuh-based SOC laboratory project
+            designed to assess Windows endpoint detection
+            coverage and identify security telemetry blind spots.
+        </p>
+
+        <div class="tags">
+
+            <span class="tag">WAZUH</span>
+            <span class="tag">WINDOWS 11</span>
+            <span class="tag">UBUNTU</span>
+            <span class="tag">VMWARE</span>
+            <span class="tag">POWERSHELL</span>
+            <span class="tag">SIEM</span>
+            <span class="tag">THREAT HUNTING</span>
+            <span class="tag">CIS / SCA</span>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>9</strong>
+                <span>Test Cases</span>
+            </div>
+
+            <div class="stat">
+                <strong>8/9</strong>
+                <span>Observed</span>
+            </div>
+
+            <div class="stat">
+                <strong>88.9%</strong>
+                <span>Test Coverage</span>
+            </div>
+
+            <div class="stat">
+                <strong>1</strong>
+                <span>Blind Spot</span>
+            </div>
+
+        </div>
+
+        <p>
+            Investigated authentication, PowerShell,
+            process creation, Windows Defender,
+            application errors, user creation,
+            scheduled tasks, and Windows Firewall telemetry.
+        </p>
+
+        <div class="finding">
+
+            <div class="finding-title">
+                PRIMARY OBSERVED FINDING
+            </div>
+
+            <p>
+                Windows Firewall events were visible locally
+                in Windows Event Viewer but were not observed
+                in Wazuh Threat Hunting during testing.
+            </p>
+
+        </div>
+
+        <div class="buttons">
+
+            <a
+                class="button button-filled"
+                href="https://github.com/mouryareddy462/soc-blind-spot"
+                target="_blank">
+                GitHub Repository
+            </a>
+
+            <a
+                class="button"
+                href="https://github.com/mouryareddy462/soc-blind-spot/blob/main/project-report.pdf"
+                target="_blank">
+                Project Report
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills">
+
+    <div class="section-label">
+        03 — Capabilities
+    </div>
+
+    <h2 class="section-title">
+        Technical <span class="gold">skills.</span>
+    </h2>
+
+    <div class="skills-grid">
+
+        <div class="skill">
+
+            <div class="skill-number">01</div>
+
+            <h4>SOC & SIEM</h4>
+
+            <p>
+                Wazuh, security monitoring,
+                event analysis and alert investigation.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">02</div>
+
+            <h4>Threat Hunting</h4>
+
+            <p>
+                Event investigation,
+                telemetry validation and detection analysis.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">03</div>
+
+            <h4>Windows Security</h4>
+
+            <p>
+                Windows Event Logs, authentication,
+                Defender and endpoint security.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">04</div>
+
+            <h4>PowerShell</h4>
+
+            <p>
+                Security configuration,
+                automation and telemetry testing.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">05</div>
+
+            <h4>Security Hardening</h4>
+
+            <p>
+                CIS-aligned configuration assessment
+                and Windows security hardening.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">06</div>
+
+            <h4>Virtualization</h4>
+
+            <p>
+                VMware, Ubuntu Linux and
+                Windows laboratory environments.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= APPROACH ================= -->
+
+<section>
+
+    <div class="section-label">
+        04 — Approach
+    </div>
+
+    <h2 class="section-title">
+        How I approach<br>
+        <span class="gold">security.</span>
+    </h2>
+
+    <div class="approach">
+
+        <div class="approach-item">
+
+            <h4>Observe</h4>
+
+            <p>
+                Understand what is happening on the
+                endpoint and identify available telemetry.
+            </p>
+
+        </div>
+
+
+        <div class="approach-item">
+
+            <h4>Investigate</h4>
+
+            <p>
+                Compare endpoint events with SIEM
+                visibility and investigate detection behavior.
+            </p>
+
+        </div>
+
+
+        <div class="approach-item">
+
+            <h4>Improve</h4>
+
+            <p>
+                Address telemetry gaps, strengthen
+                security controls and document findings.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="contact">
+
+    <div class="section-label">
+        05 — Contact
+    </div>
+
+    <h2>
+        Let's <span class="gold">connect.</span>
+    </h2>
+
+    <p>
+        Interested in cybersecurity, SOC operations,
+        SIEM monitoring, threat hunting and defensive security.
+    </p>
+
+    <div class="contact-buttons">
+
+        <a
+            class="button button-filled"
+            href="https://github.com/mouryareddy462"
+            target="_blank">
+            GitHub
+        </a>
+
+        <!-- Replace YOUR-LINKEDIN-URL with your LinkedIn profile -->
+
+        <a
+            class="button"
+            href="https://www.linkedin.com/in/mourya-reddy-b112723b2"
+            target="_blank">
+            LinkedIn
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 MOURYA SAI REDDY N
+
+    <br><br>
+
+    CYBERSECURITY • SOC • SIEM • THREAT HUNTING
+
+</footer>
+
+</body>
+</html>
