@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Windows Security Monitoring with Wazuh - SIEM and Security Event Analysis Lab">
+    <title>Windows Security Monitoring with Wazuh</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #111827;
+            color: #ffffff;
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        header h1 {
+            margin: 0 0 15px;
+            font-size: 42px;
+            line-height: 1.2;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 18px;
+            color: #d1d5db;
+        }
+
+        nav {
+            background: #1f2937;
+            text-align: center;
+            padding: 14px 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px 10px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background: #ffffff;
+            margin-bottom: 30px;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+            color: #111827;
+            font-size: 28px;
+        }
+
+        h3 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #374151;
+            font-size: 20px;
+        }
+
+        p {
+            margin: 0 0 15px;
+        }
+
+        ul,
+        ol {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .intro {
+            font-size: 18px;
+        }
+
+        .info-box {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-left: 5px solid #374151;
+            border-radius: 5px;
+        }
+
+        .evidence {
+            margin: 35px 0 45px;
+            text-align: center;
+        }
+
+        .evidence img {
+            display: block;
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            margin: 0 auto;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .caption {
+            margin-top: 12px;
+            margin-bottom: 0;
+            color: #6b7280;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .severity {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-left: 5px solid #4b5563;
+            border-radius: 5px;
+        }
+
+        .severity h3 {
+            margin-top: 0;
+        }
+
+        code {
+            padding: 2px 5px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+        }
+
+        footer {
+            background: #111827;
+            color: #d1d5db;
+            text-align: center;
+            padding: 35px 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 50px 15px;
+            }
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            main {
+                padding: 0 12px;
+                margin: 25px auto;
+            }
+
+            section {
+                padding: 22px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            nav a {
+                font-size: 13px;
+                margin: 4px 6px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Windows Security Monitoring with Wazuh</h1>
+        <p>SIEM Monitoring, Windows Event Analysis and Security Investigation</p>
+    </header>
+
+    <nav>
+        <a href="#overview">Overview</a>
+        <a href="#configuration">Configuration</a>
+        <a href="#testing">Testing</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#observations">Observations</a>
+        <a href="#severity">Severity</a>
+        <a href="#limitations">Limitations</a>
+        <a href="#conclusion">Conclusion</a>
+    </nav>
+
+    <main>
+
+        <!-- OVERVIEW -->
+
+        <section id="overview">
+            <h2>1. Project Overview</h2>
+
+            <p class="intro">
+                This project demonstrates Windows security monitoring using
+                Wazuh as a centralized security monitoring and analysis
+                platform.
+            </p>
+
+            <p>
+                The purpose of the lab was to observe Windows security and
+                system events, collect relevant telemetry and understand how
+                the information can be used during a security investigation.
+            </p>
+
+            <h3>Objectives</h3>
+
+            <ul>
+                <li>Monitor Windows security events.</li>
+                <li>Review successful authentication activity.</li>
+                <li>Review failed authentication activity.</li>
+                <li>Monitor PowerShell-related activity.</li>
+                <li>Review application events.</li>
+                <li>Review Windows Defender events.</li>
+                <li>Monitor process creation events.</li>
+                <li>Understand firewall monitoring limitations.</li>
+                <li>Use collected evidence to support security analysis.</li>
+            </ul>
+        </section>
+
+
+        <!-- CONFIGURATION -->
+
+        <section id="configuration">
+            <h2>2. Tool Configuration</h2>
+
+            <p>
+                Wazuh was used to centralize and review telemetry generated
+                by the Windows endpoint. Windows event information provides
+                useful context for authentication, process execution and
+                endpoint security monitoring.
+            </p>
+
+            <h3>Tools Used</h3>
+
+            <ul>
+                <li>Wazuh</li>
+                <li>Windows Event Viewer</li>
+                <li>Windows Security Event Logs</li>
+                <li>PowerShell</li>
+                <li>Windows Defender</li>
+                <li>Windows Firewall</li>
+            </ul>
+
+            <h3>Important Windows Event IDs</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event ID</th>
+                        <th>Description</th>
+                        <th>Security Relevance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>4624</td>
+                        <td>Successful logon</td>
+                        <td>Useful for monitoring authentication activity.</td>
+                    </tr>
+
+                    <tr>
+                        <td>4625</td>
+                        <td>Failed logon</td>
+                        <td>Can help identify repeated or suspicious authentication failures.</td>
+                    </tr>
+
+                    <tr>
+                        <td>4688</td>
+                        <td>Process creation</td>
+                        <td>Useful when investigating suspicious process execution.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <strong>Monitoring approach:</strong>
+                Events were considered in context rather than treating an
+                individual event as automatically malicious.
+            </div>
+        </section>
+
+
+        <!-- TESTING -->
+
+        <section id="testing">
+            <h2>3. Test Requests and Lab Simulation</h2>
+
+            <p>
+                Controlled activities were reviewed to verify that relevant
+                Windows telemetry could be observed through the monitoring
+                environment.
+            </p>
+
+            <h3>Test 1 — Successful Logon</h3>
+
+            <p>
+                Successful authentication activity was reviewed using Windows
+                Security Event ID 4624.
+            </p>
+
+            <h3>Test 2 — Failed Logon</h3>
+
+            <p>
+                Failed authentication activity was reviewed using Windows
+                Security Event ID 4625.
+            </p>
+
+            <h3>Test 3 — PowerShell Activity</h3>
+
+            <p>
+                PowerShell-related activity was reviewed to determine whether
+                the monitoring environment provided useful endpoint
+                telemetry.
+            </p>
+
+            <h3>Test 4 — Process Creation</h3>
+
+            <p>
+                Process creation activity was reviewed using Windows Event
+                ID 4688.
+            </p>
+        </section>
+
+
+        <!-- EVIDENCE -->
+
+        <section id="evidence">
+            <h2>4. SIEM Evidence</h2>
+
+            <p>
+                The following screenshots represent the evidence collected
+                during the Windows security monitoring exercise.
+            </p>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/01-wazuh-dashboard.png"
+                    alt="Wazuh Dashboard"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 1 — Wazuh dashboard showing the monitoring environment.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/05-successful-logon-4624.png"
+                    alt="Successful Logon Event 4624"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 2 — Successful Windows logon event, Event ID 4624.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/06-failed-logon-4625.png"
+                    alt="Failed Logon Event 4625"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 3 — Failed Windows logon event, Event ID 4625.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/08-powershell-detection.png"
+                    alt="PowerShell Detection"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 4 — PowerShell-related detection observed during monitoring.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/09-application-error.png"
+                    alt="Application Error"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 5 — Application-related event observed during the lab.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/10-windows-defender-1001.png"
+                    alt="Windows Defender Event 1001"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 6 — Windows Defender event, Event ID 1001.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/11-process-creation-4688.png"
+                    alt="Process Creation Event 4688"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 7 — Windows process creation event, Event ID 4688.
+                </p>
+            </div>
+
+
+            <div class="evidence">
+                <img
+                    src="assets/evidence/15-firewall-blind-spot-simulated.png"
+                    alt="Firewall Blind Spot Simulation"
+                    loading="lazy">
+
+                <p class="caption">
+                    Figure 8 — Simulated firewall monitoring blind spot.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- OBSERVATIONS -->
+
+        <section id="observations">
+            <h2>5. Actual Observations</h2>
+
+            <p>
+                The lab demonstrated that Windows generates different types
+                of security and system telemetry that can be useful during
+                endpoint investigation.
+            </p>
+
+            <h3>Authentication Activity</h3>
+
+            <p>
+                Successful and failed logon events provide visibility into
+                authentication activity. Event 4624 represents successful
+                authentication, while Event 4625 represents a failed logon.
+            </p>
+
+            <h3>PowerShell Activity</h3>
+
+            <p>
+                PowerShell is a legitimate administrative tool, but its
+                activity can also be relevant during security investigations.
+                The context of the command, user, parent process and related
+                events should be considered.
+            </p>
+
+            <h3>Process Creation</h3>
+
+            <p>
+                Process creation telemetry provides additional information
+                about programs executed on a Windows endpoint. Unusual
+                processes or suspicious parent-child relationships may
+                require further investigation.
+            </p>
+
+            <h3>Windows Defender</h3>
+
+            <p>
+                Windows Defender events can provide additional endpoint
+                security context and can be correlated with other events
+                during an investigation.
+            </p>
+        </section>
+
+
+        <!-- BEFORE / AFTER -->
+
+        <section>
+            <h2>6. Before / After Configuration</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Monitoring Area</th>
+                        <th>Before</th>
+                        <th>After</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Authentication</td>
+                        <td>Limited centralized visibility</td>
+                        <td>Successful and failed logon events available for review</td>
+                    </tr>
+
+                    <tr>
+                        <td>PowerShell</td>
+                        <td>Limited visibility</td>
+                        <td>PowerShell-related telemetry available</td>
+                    </tr>
+
+                    <tr>
+                        <td>Process Monitoring</td>
+                        <td>Limited process visibility</td>
+                        <td>Process creation events available for investigation</td>
+                    </tr>
+
+                    <tr>
+                        <td>Endpoint Security</td>
+                        <td>Limited centralized context</td>
+                        <td>Windows Defender events available for correlation</td>
+                    </tr>
+
+                    <tr>
+                        <td>SIEM Monitoring</td>
+                        <td>Events reviewed separately</td>
+                        <td>Centralized visibility through Wazuh</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <!-- SEVERITY -->
+
+        <section id="severity">
+            <h2>7. Justified Severity Rating</h2>
+
+            <p>
+                Severity should be determined using the context of the event,
+                rather than relying only on the event ID.
+            </p>
+
+            <div class="severity">
+                <h3>Failed Authentication — Medium</h3>
+
+                <p>
+                    A single failed authentication attempt does not necessarily
+                    indicate malicious activity. Repeated failures involving
+                    unusual accounts, hosts or sources may require additional
+                    investigation.
+                </p>
+            </div>
+
+            <div class="severity">
+                <h3>PowerShell Activity — Medium to High</h3>
+
+                <p>
+                    PowerShell can be used for legitimate administration.
+                    Suspicious commands, unusual execution context or
+                    unexpected parent processes can increase the investigation
+                    priority.
+                </p>
+            </div>
+
+            <div class="severity">
+                <h3>Process Creation — Medium</h3>
+
+                <p>
+                    Process creation is normal Windows activity. Investigation
+                    priority depends on the process, command line, execution
+                    location and parent process.
+                </p>
+            </div>
+
+            <div class="severity">
+                <h3>Firewall Visibility Gap — Medium</h3>
+
+                <p>
+                    A firewall monitoring blind spot can reduce visibility into
+                    network activity. The actual risk depends on which traffic
+                    and systems are affected.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- LIMITATIONS -->
+
+        <section id="limitations">
+            <h2>8. What Worked and What Did Not Work</h2>
+
+            <h3>What Worked</h3>
+
+            <ul>
+                <li>Wazuh provided centralized endpoint monitoring.</li>
+                <li>Windows authentication events were available for review.</li>
+                <li>Successful logon activity could be monitored.</li>
+                <li>Failed logon activity could be monitored.</li>
+                <li>PowerShell-related activity could be investigated.</li>
+                <li>Process creation telemetry was available.</li>
+                <li>Windows Defender events provided additional context.</li>
+            </ul>
+
+            <h3>What Did Not Work / Limitations</h3>
+
+            <ul>
+                <li>
+                    Not every Windows event provides enough information for
+                    a complete investigation by itself.
+                </li>
+
+                <li>
+                    Missing or disabled audit policies can create visibility gaps.
+                </li>
+
+                <li>
+                    Some investigations require additional logging and correlation.
+                </li>
+
+                <li>
+                    A single event should not automatically be considered proof
+                    of malicious activity.
+                </li>
+
+                <li>
+                    Firewall visibility may be limited when appropriate logging
+                    is unavailable.
+                </li>
+            </ul>
+        </section>
+
+
+        <!-- SOC ANALYST APPROACH -->
+
+        <section>
+            <h2>9. SOC Analyst Investigation Approach</h2>
+
+            <p>
+                When a suspicious event is identified, a SOC analyst should
+                investigate the surrounding context rather than making a
+                decision based on a single event.
+            </p>
+
+            <ol>
+                <li>Identify the affected host.</li>
+                <li>Identify the account involved.</li>
+                <li>Review the event timestamp.</li>
+                <li>Review related authentication events.</li>
+                <li>Check process and parent-process information.</li>
+                <li>Review PowerShell or command-line activity when available.</li>
+                <li>Check related endpoint security events.</li>
+                <li>Look for repeated or correlated activity.</li>
+                <li>Determine whether the activity is expected or suspicious.</li>
+                <li>Assign an appropriate severity based on the available evidence.</li>
+            </ol>
+        </section>
+
+
+        <!-- CONCLUSION -->
+
+        <section id="conclusion">
+            <h2>10. Conclusion</h2>
+
+            <p>
+                This lab demonstrated how Wazuh can be used to monitor Windows
+                security telemetry and provide centralized visibility for
+                security investigations.
+            </p>
+
+            <p>
+                The evidence covered authentication events, PowerShell activity,
+                application events, Windows Defender telemetry, process
+                creation and a simulated firewall monitoring limitation.
+            </p>
+
+            <p>
+                The exercise also demonstrated the importance of appropriate
+                logging and event correlation. Effective SIEM monitoring
+                depends on the quality and completeness of the telemetry
+                available to the monitoring platform.
+            </p>
+
+            <p>
+                From a SOC analyst perspective, suspicious activity should be
+                correlated with the affected host, account, timestamp, process,
+                command line and related events before determining whether it
+                represents a genuine security incident.
+            </p>
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p><strong>Windows Security Monitoring with Wazuh</strong></p>
+        <p>SIEM Monitoring • Windows Event Logs • Endpoint Security Analysis</p>
+    </footer>
+
+</body>
+</html>
