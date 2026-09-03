@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Windows Security Monitoring with Wazuh - SIEM and Security Event Analysis Lab">
-    <title>Windows Security Monitoring with Wazuh</title>
+
+    <title>Mourya Reddy | Cybersecurity Portfolio</title>
+
+    <meta name="description"
+          content="Mourya Reddy — Cybersecurity and SOC portfolio featuring Wazuh, SIEM, threat hunting, Windows security and detection engineering.">
 
     <style>
+
+        /* =========================
+           GLOBAL
+        ========================== */
+
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
@@ -16,751 +26,1207 @@
         }
 
         body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f8;
-            color: #1f2937;
+            background: #050505;
+            color: #f5ead2;
+            font-family: "Georgia", "Times New Roman", serif;
             line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        header {
-            background: #111827;
-            color: #ffffff;
-            text-align: center;
-            padding: 70px 20px;
+        ::selection {
+            background: #c9a45c;
+            color: #050505;
         }
 
-        header h1 {
-            margin: 0 0 15px;
-            font-size: 42px;
-            line-height: 1.2;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        header p {
-            margin: 0;
-            font-size: 18px;
-            color: #d1d5db;
+        .gold {
+            color: #d4af69;
         }
+
+        /* =========================
+           NAVIGATION
+        ========================== */
 
         nav {
-            background: #1f2937;
-            text-align: center;
-            padding: 14px 10px;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
+
+            padding: 22px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(5, 5, 5, 0.88);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(212, 175, 105, 0.18);
         }
 
-        nav a {
-            color: #ffffff;
-            text-decoration: none;
-            display: inline-block;
-            margin: 5px 10px;
-            font-size: 14px;
+        .logo {
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            letter-spacing: 4px;
+            color: #d4af69;
+            font-weight: 600;
         }
 
-        nav a:hover {
-            text-decoration: underline;
+        .nav-links {
+            display: flex;
+            gap: 32px;
+
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
         }
 
-        main {
-            width: 100%;
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
+        .nav-links a {
+            color: #c8c0b0;
+            transition: 0.3s;
         }
 
-        section {
-            background: #ffffff;
-            margin-bottom: 30px;
-            padding: 35px;
-            border-radius: 10px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        .nav-links a:hover {
+            color: #d4af69;
         }
 
-        h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e5e7eb;
-            color: #111827;
-            font-size: 28px;
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding: 140px 8% 80px;
+
+            position: relative;
         }
 
-        h3 {
-            margin-top: 25px;
-            margin-bottom: 10px;
-            color: #374151;
-            font-size: 20px;
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background: rgba(212, 175, 105, 0.06);
+
+            filter: blur(100px);
+
+            top: 15%;
+            right: -150px;
+
+            pointer-events: none;
         }
 
-        p {
-            margin: 0 0 15px;
+        .hero-content {
+            max-width: 950px;
         }
 
-        ul,
-        ol {
-            margin-top: 10px;
-            margin-bottom: 20px;
-            padding-left: 25px;
+        .eyebrow {
+            font-family: Arial, sans-serif;
+
+            font-size: 12px;
+
+            letter-spacing: 5px;
+
+            color: #d4af69;
+
+            margin-bottom: 25px;
         }
 
-        li {
-            margin-bottom: 8px;
+        .hero h1 {
+            font-size: clamp(55px, 9vw, 115px);
+
+            font-weight: normal;
+
+            line-height: 0.95;
+
+            letter-spacing: -3px;
+
+            color: #f7edda;
+
+            margin-bottom: 25px;
         }
 
-        .intro {
-            font-size: 18px;
-        }
-
-        .info-box {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f9fafb;
-            border-left: 5px solid #374151;
-            border-radius: 5px;
-        }
-
-        .evidence {
-            margin: 35px 0 45px;
-            text-align: center;
-        }
-
-        .evidence img {
-            display: block;
-            width: 100%;
-            max-width: 1000px;
-            height: auto;
-            margin: 0 auto;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        .caption {
-            margin-top: 12px;
-            margin-bottom: 0;
-            color: #6b7280;
-            font-size: 14px;
+        .hero h1 span {
+            color: #d4af69;
             font-style: italic;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+        .hero h2 {
+            font-family: Arial, sans-serif;
+
+            font-size: 15px;
+
+            font-weight: normal;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            color: #a69d8c;
+
+            margin-bottom: 28px;
         }
 
-        th,
-        td {
-            border: 1px solid #d1d5db;
-            padding: 12px;
-            text-align: left;
-            vertical-align: top;
+        .hero p {
+            max-width: 650px;
+
+            color: #aaa294;
+
+            font-size: 18px;
+
+            margin-bottom: 40px;
         }
 
-        th {
-            background: #f3f4f6;
-            color: #111827;
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        .severity {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f9fafb;
-            border-left: 5px solid #4b5563;
-            border-radius: 5px;
+        .button {
+            display: inline-block;
+
+            padding: 13px 25px;
+
+            border: 1px solid #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 12px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            transition: 0.3s;
         }
 
-        .severity h3 {
-            margin-top: 0;
+        .button:hover {
+            background: #d4af69;
+            color: #050505;
         }
 
-        code {
-            padding: 2px 5px;
-            background: #f3f4f6;
-            border-radius: 4px;
-            font-family: Consolas, monospace;
+        .button-filled {
+            background: #d4af69;
+            color: #050505;
         }
+
+        .button-filled:hover {
+            background: #f0d39a;
+        }
+
+        /* =========================
+           SECTIONS
+        ========================== */
+
+        section {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 110px 8%;
+        }
+
+        .section-label {
+            font-family: Arial, sans-serif;
+
+            color: #d4af69;
+
+            font-size: 11px;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(35px, 5vw, 55px);
+
+            font-weight: normal;
+
+            color: #f5ead2;
+
+            margin-bottom: 45px;
+        }
+
+        .line {
+            width: 70px;
+
+            height: 1px;
+
+            background: #d4af69;
+
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           ABOUT
+        ========================== */
+
+        .about-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+        }
+
+        .about-text p {
+            color: #aaa294;
+
+            font-size: 17px;
+
+            margin-bottom: 20px;
+        }
+
+        .about-highlight {
+            border-left: 1px solid #d4af69;
+
+            padding-left: 30px;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+        .about-highlight p {
+            font-size: 25px;
+
+            font-style: italic;
+
+            color: #d8cbb3;
+        }
+
+        /* =========================
+           PROJECT
+        ========================== */
+
+        .project-card {
+            border: 1px solid rgba(212, 175, 105, 0.28);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(212, 175, 105, 0.06),
+                    rgba(255,255,255,0.015)
+                );
+
+            padding: 50px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+            height: 250px;
+
+            border-radius: 50%;
+
+            background: rgba(212, 175, 105, 0.05);
+
+            filter: blur(70px);
+
+            right: -100px;
+            top: -100px;
+        }
+
+        .project-number {
+            font-family: Arial, sans-serif;
+
+            color: #d4af69;
+
+            font-size: 12px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 25px;
+        }
+
+        .project-card h3 {
+            font-size: clamp(30px, 4vw, 48px);
+
+            font-weight: normal;
+
+            line-height: 1.15;
+
+            margin-bottom: 25px;
+
+            max-width: 850px;
+        }
+
+        .project-card p {
+            color: #aaa294;
+
+            max-width: 800px;
+
+            font-size: 17px;
+
+            margin-bottom: 30px;
+        }
+
+        .tags {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+
+            margin-bottom: 40px;
+        }
+
+        .tag {
+            border: 1px solid rgba(212, 175, 105, 0.3);
+
+            padding: 7px 12px;
+
+            color: #c9b992;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           STATS
+        ========================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            border-top: 1px solid rgba(212,175,105,0.2);
+
+            border-bottom: 1px solid rgba(212,175,105,0.2);
+
+            margin: 40px 0;
+
+            padding: 25px 0;
+        }
+
+        .stat {
+            text-align: center;
+
+            border-right: 1px solid rgba(212,175,105,0.15);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat strong {
+            display: block;
+
+            font-size: 34px;
+
+            color: #d4af69;
+
+            font-weight: normal;
+        }
+
+        .stat span {
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: #847d70;
+        }
+
+        /* =========================
+           FINDING
+        ========================== */
+
+        .finding {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border: 1px solid rgba(212,175,105,0.25);
+
+            background: rgba(212,175,105,0.035);
+        }
+
+        .finding-title {
+            color: #d4af69;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 10px;
+        }
+
+        .finding p {
+            margin: 0;
+
+            color: #c2b8a5;
+        }
+
+        /* =========================
+           SKILLS
+        ========================== */
+
+        .skills-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .skill {
+            padding: 30px;
+
+            border: 1px solid rgba(212,175,105,0.18);
+
+            transition: 0.3s;
+        }
+
+        .skill:hover {
+            border-color: #d4af69;
+
+            transform: translateY(-4px);
+        }
+
+        .skill-number {
+            font-family: Arial, sans-serif;
+
+            color: #6f6759;
+
+            font-size: 11px;
+
+            margin-bottom: 20px;
+        }
+
+        .skill h4 {
+            font-size: 20px;
+
+            font-weight: normal;
+
+            color: #d8cbb3;
+
+            margin-bottom: 10px;
+        }
+
+        .skill p {
+            color: #827b70;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           EXPERIENCE / APPROACH
+        ========================== */
+
+        .approach {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 35px;
+        }
+
+        .approach-item {
+            border-top: 1px solid #d4af69;
+
+            padding-top: 20px;
+        }
+
+        .approach-item h4 {
+            font-size: 22px;
+
+            font-weight: normal;
+
+            margin-bottom: 12px;
+        }
+
+        .approach-item p {
+            color: #8f887d;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           CONTACT
+        ========================== */
+
+        .contact {
+            text-align: center;
+
+            padding-top: 130px;
+
+            padding-bottom: 130px;
+        }
+
+        .contact h2 {
+            font-size: clamp(40px, 6vw, 70px);
+
+            font-weight: normal;
+
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            color: #928a7d;
+
+            max-width: 600px;
+
+            margin: auto;
+
+            margin-bottom: 35px;
+        }
+
+        .contact-links {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           FOOTER
+        ========================== */
 
         footer {
-            background: #111827;
-            color: #d1d5db;
+            border-top: 1px solid rgba(212,175,105,0.15);
+
             text-align: center;
-            padding: 35px 20px;
+
+            padding: 30px;
+
+            color: #5f594f;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 11px;
+
+            letter-spacing: 1px;
         }
 
-        footer p {
-            margin: 5px 0;
-        }
+        /* =========================
+           MOBILE
+        ========================== */
 
-        @media (max-width: 700px) {
-            header {
-                padding: 50px 15px;
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
             }
 
-            header h1 {
-                font-size: 30px;
-            }
-
-            header p {
-                font-size: 16px;
-            }
-
-            main {
-                padding: 0 12px;
-                margin: 25px auto;
+            .hero {
+                padding-left: 7%;
+                padding-right: 7%;
             }
 
             section {
-                padding: 22px;
+                padding-left: 7%;
+                padding-right: 7%;
             }
 
-            h2 {
-                font-size: 24px;
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
             }
 
-            nav a {
-                font-size: 13px;
-                margin: 4px 6px;
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-            table {
-                display: block;
-                overflow-x: auto;
+            .stat {
+                padding: 15px 5px;
+            }
+
+            .stat:nth-child(2) {
+                border-right: none;
+            }
+
+            .stat:nth-child(-n+2) {
+                border-bottom: 1px solid rgba(212,175,105,0.15);
+                padding-bottom: 20px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .approach {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 30px 22px;
             }
         }
+
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Windows Security Monitoring with Wazuh</h1>
-        <p>SIEM Monitoring, Windows Event Analysis and Security Investigation</p>
-    </header>
+<!-- =========================
+     NAVIGATION
+========================== -->
 
-    <nav>
-        <a href="#overview">Overview</a>
-        <a href="#configuration">Configuration</a>
-        <a href="#testing">Testing</a>
-        <a href="#evidence">Evidence</a>
-        <a href="#observations">Observations</a>
-        <a href="#severity">Severity</a>
-        <a href="#limitations">Limitations</a>
-        <a href="#conclusion">Conclusion</a>
-    </nav>
+<nav>
 
-    <main>
+    <div class="logo">
+        MOURYA REDDY
+    </div>
 
-        <!-- OVERVIEW -->
+    <div class="nav-links">
 
-        <section id="overview">
-            <h2>1. Project Overview</h2>
+        <a href="#about">ABOUT</a>
 
-            <p class="intro">
-                This project demonstrates Windows security monitoring using
-                Wazuh as a centralized security monitoring and analysis
-                platform.
+        <a href="#project">PROJECT</a>
+
+        <a href="#skills">SKILLS</a>
+
+        <a href="#contact">CONTACT</a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO
+========================== -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            CYBERSECURITY • SOC • SIEM
+        </div>
+
+        <h1>
+            Mourya<br>
+            <span>Reddy</span>
+        </h1>
+
+        <h2>
+            Cybersecurity & SOC Enthusiast
+        </h2>
+
+        <p>
+            I explore the space between security events,
+            telemetry, and detection — with a focus on
+            understanding not only what a SIEM detects,
+            but what it can miss.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                class="button button-filled"
+                href="#project">
+                Explore My Work
+            </a>
+
+            <a
+                class="button"
+                href="https://github.com/mouryareddy462"
+                target="_blank">
+                GitHub
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     ABOUT
+========================== -->
+
+<section id="about">
+
+    <div class="section-label">
+        01 — About
+    </div>
+
+    <h2 class="section-title">
+        Security with<br>
+        <span class="gold">curiosity.</span>
+    </h2>
+
+    <div class="line"></div>
+
+    <div class="about-grid">
+
+        <div class="about-text">
+
+            <p>
+                I am building hands-on cybersecurity experience
+                through practical SOC and SIEM projects.
             </p>
 
             <p>
-                The purpose of the lab was to observe Windows security and
-                system events, collect relevant telemetry and understand how
-                the information can be used during a security investigation.
+                My work focuses on security monitoring,
+                threat hunting, Windows security,
+                endpoint telemetry, detection engineering,
+                and security hardening.
             </p>
-
-            <h3>Objectives</h3>
-
-            <ul>
-                <li>Monitor Windows security events.</li>
-                <li>Review successful authentication activity.</li>
-                <li>Review failed authentication activity.</li>
-                <li>Monitor PowerShell-related activity.</li>
-                <li>Review application events.</li>
-                <li>Review Windows Defender events.</li>
-                <li>Monitor process creation events.</li>
-                <li>Understand firewall monitoring limitations.</li>
-                <li>Use collected evidence to support security analysis.</li>
-            </ul>
-        </section>
-
-
-        <!-- CONFIGURATION -->
-
-        <section id="configuration">
-            <h2>2. Tool Configuration</h2>
 
             <p>
-                Wazuh was used to centralize and review telemetry generated
-                by the Windows endpoint. Windows event information provides
-                useful context for authentication, process execution and
-                endpoint security monitoring.
+                I enjoy investigating the difference between
+                what actually happens on an endpoint and what
+                a security monitoring platform is able to observe.
             </p>
 
-            <h3>Tools Used</h3>
+        </div>
 
-            <ul>
-                <li>Wazuh</li>
-                <li>Windows Event Viewer</li>
-                <li>Windows Security Event Logs</li>
-                <li>PowerShell</li>
-                <li>Windows Defender</li>
-                <li>Windows Firewall</li>
-            </ul>
-
-            <h3>Important Windows Event IDs</h3>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Event ID</th>
-                        <th>Description</th>
-                        <th>Security Relevance</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>4624</td>
-                        <td>Successful logon</td>
-                        <td>Useful for monitoring authentication activity.</td>
-                    </tr>
-
-                    <tr>
-                        <td>4625</td>
-                        <td>Failed logon</td>
-                        <td>Can help identify repeated or suspicious authentication failures.</td>
-                    </tr>
-
-                    <tr>
-                        <td>4688</td>
-                        <td>Process creation</td>
-                        <td>Useful when investigating suspicious process execution.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="info-box">
-                <strong>Monitoring approach:</strong>
-                Events were considered in context rather than treating an
-                individual event as automatically malicious.
-            </div>
-        </section>
-
-
-        <!-- TESTING -->
-
-        <section id="testing">
-            <h2>3. Test Requests and Lab Simulation</h2>
+        <div class="about-highlight">
 
             <p>
-                Controlled activities were reviewed to verify that relevant
-                Windows telemetry could be observed through the monitoring
-                environment.
+                “Not seeing an alert does not always mean
+                nothing happened.”
             </p>
 
-            <h3>Test 1 — Successful Logon</h3>
+        </div>
 
-            <p>
-                Successful authentication activity was reviewed using Windows
-                Security Event ID 4624.
-            </p>
+    </div>
 
-            <h3>Test 2 — Failed Logon</h3>
-
-            <p>
-                Failed authentication activity was reviewed using Windows
-                Security Event ID 4625.
-            </p>
-
-            <h3>Test 3 — PowerShell Activity</h3>
-
-            <p>
-                PowerShell-related activity was reviewed to determine whether
-                the monitoring environment provided useful endpoint
-                telemetry.
-            </p>
-
-            <h3>Test 4 — Process Creation</h3>
-
-            <p>
-                Process creation activity was reviewed using Windows Event
-                ID 4688.
-            </p>
-        </section>
+</section>
 
 
-        <!-- EVIDENCE -->
+<!-- =========================
+     PROJECT
+========================== -->
 
-        <section id="evidence">
-            <h2>4. SIEM Evidence</h2>
+<section id="project">
 
-            <p>
-                The following screenshots represent the evidence collected
-                during the Windows security monitoring exercise.
-            </p>
+    <div class="section-label">
+        02 — Featured Project
+    </div>
 
+    <h2 class="section-title">
+        SOC Blind Spot
+    </h2>
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/01-wazuh-dashboard.png"
-                    alt="Wazuh Dashboard"
-                    loading="lazy">
+    <div class="project-card">
 
-                <p class="caption">
-                    Figure 1 — Wazuh dashboard showing the monitoring environment.
-                </p>
-            </div>
+        <div class="project-number">
+            PROJECT / 001
+        </div>
 
+        <h3>
+            Automated Detection Coverage &
+            Telemetry Gap Assessment Platform
+        </h3>
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/05-successful-logon-4624.png"
-                    alt="Successful Logon Event 4624"
-                    loading="lazy">
-
-                <p class="caption">
-                    Figure 2 — Successful Windows logon event, Event ID 4624.
-                </p>
-            </div>
+        <p>
+            A hands-on Wazuh-based SOC laboratory project
+            designed to assess Windows endpoint detection
+            coverage and identify security telemetry blind spots.
+        </p>
 
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/06-failed-logon-4625.png"
-                    alt="Failed Logon Event 4625"
-                    loading="lazy">
+        <div class="tags">
 
-                <p class="caption">
-                    Figure 3 — Failed Windows logon event, Event ID 4625.
-                </p>
+            <span class="tag">WAZUH</span>
+
+            <span class="tag">WINDOWS 11</span>
+
+            <span class="tag">UBUNTU</span>
+
+            <span class="tag">VMWARE</span>
+
+            <span class="tag">POWERSHELL</span>
+
+            <span class="tag">SIEM</span>
+
+            <span class="tag">THREAT HUNTING</span>
+
+            <span class="tag">CIS / SCA</span>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <strong>9</strong>
+
+                <span>
+                    Test Cases
+                </span>
+
             </div>
 
+            <div class="stat">
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/08-powershell-detection.png"
-                    alt="PowerShell Detection"
-                    loading="lazy">
+                <strong>8/9</strong>
 
-                <p class="caption">
-                    Figure 4 — PowerShell-related detection observed during monitoring.
-                </p>
+                <span>
+                    Observed
+                </span>
+
             </div>
 
+            <div class="stat">
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/09-application-error.png"
-                    alt="Application Error"
-                    loading="lazy">
+                <strong>88.9%</strong>
 
-                <p class="caption">
-                    Figure 5 — Application-related event observed during the lab.
-                </p>
+                <span>
+                    Test Coverage
+                </span>
+
             </div>
 
+            <div class="stat">
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/10-windows-defender-1001.png"
-                    alt="Windows Defender Event 1001"
-                    loading="lazy">
+                <strong>1</strong>
 
-                <p class="caption">
-                    Figure 6 — Windows Defender event, Event ID 1001.
-                </p>
+                <span>
+                    Blind Spot
+                </span>
+
             </div>
 
+        </div>
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/11-process-creation-4688.png"
-                    alt="Process Creation Event 4688"
-                    loading="lazy">
 
-                <p class="caption">
-                    Figure 7 — Windows process creation event, Event ID 4688.
-                </p>
+        <p>
+            The project investigated authentication,
+            PowerShell, process creation, Windows Defender,
+            application errors, user creation, scheduled tasks,
+            and Windows Firewall telemetry.
+        </p>
+
+
+        <div class="finding">
+
+            <div class="finding-title">
+                PRIMARY OBSERVED FINDING
             </div>
 
+            <p>
+                Windows Firewall events were visible locally
+                in Windows Event Viewer but were not observed
+                in Wazuh Threat Hunting during testing.
+            </p>
 
-            <div class="evidence">
-                <img
-                    src="assets/evidence/15-firewall-blind-spot-simulated.png"
-                    alt="Firewall Blind Spot Simulation"
-                    loading="lazy">
+        </div>
 
-                <p class="caption">
-                    Figure 8 — Simulated firewall monitoring blind spot.
-                </p>
+        <br>
+
+        <div class="hero-buttons">
+
+            <a
+                class="button button-filled"
+                href="https://github.com/mouryareddy462/soc-blind-spot"
+                target="_blank">
+                View GitHub Repository
+            </a>
+
+            <a
+                class="button"
+                href="https://github.com/mouryareddy462/soc-blind-spot/blob/main/project-report.pdf"
+                target="_blank">
+                Read Project Report
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SKILLS
+========================== -->
+
+<section id="skills">
+
+    <div class="section-label">
+        03 — Capabilities
+    </div>
+
+    <h2 class="section-title">
+        Technical <span class="gold">skills.</span>
+    </h2>
+
+    <div class="skills-grid">
+
+        <div class="skill">
+
+            <div class="skill-number">
+                01
             </div>
 
-        </section>
-
-
-        <!-- OBSERVATIONS -->
-
-        <section id="observations">
-            <h2>5. Actual Observations</h2>
+            <h4>
+                SOC & SIEM
+            </h4>
 
             <p>
-                The lab demonstrated that Windows generates different types
-                of security and system telemetry that can be useful during
-                endpoint investigation.
+                Wazuh, security monitoring,
+                event analysis and alert investigation.
             </p>
 
-            <h3>Authentication Activity</h3>
-
-            <p>
-                Successful and failed logon events provide visibility into
-                authentication activity. Event 4624 represents successful
-                authentication, while Event 4625 represents a failed logon.
-            </p>
-
-            <h3>PowerShell Activity</h3>
-
-            <p>
-                PowerShell is a legitimate administrative tool, but its
-                activity can also be relevant during security investigations.
-                The context of the command, user, parent process and related
-                events should be considered.
-            </p>
-
-            <h3>Process Creation</h3>
-
-            <p>
-                Process creation telemetry provides additional information
-                about programs executed on a Windows endpoint. Unusual
-                processes or suspicious parent-child relationships may
-                require further investigation.
-            </p>
-
-            <h3>Windows Defender</h3>
-
-            <p>
-                Windows Defender events can provide additional endpoint
-                security context and can be correlated with other events
-                during an investigation.
-            </p>
-        </section>
+        </div>
 
 
-        <!-- BEFORE / AFTER -->
+        <div class="skill">
 
-        <section>
-            <h2>6. Before / After Configuration</h2>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Monitoring Area</th>
-                        <th>Before</th>
-                        <th>After</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Authentication</td>
-                        <td>Limited centralized visibility</td>
-                        <td>Successful and failed logon events available for review</td>
-                    </tr>
-
-                    <tr>
-                        <td>PowerShell</td>
-                        <td>Limited visibility</td>
-                        <td>PowerShell-related telemetry available</td>
-                    </tr>
-
-                    <tr>
-                        <td>Process Monitoring</td>
-                        <td>Limited process visibility</td>
-                        <td>Process creation events available for investigation</td>
-                    </tr>
-
-                    <tr>
-                        <td>Endpoint Security</td>
-                        <td>Limited centralized context</td>
-                        <td>Windows Defender events available for correlation</td>
-                    </tr>
-
-                    <tr>
-                        <td>SIEM Monitoring</td>
-                        <td>Events reviewed separately</td>
-                        <td>Centralized visibility through Wazuh</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-
-
-        <!-- SEVERITY -->
-
-        <section id="severity">
-            <h2>7. Justified Severity Rating</h2>
-
-            <p>
-                Severity should be determined using the context of the event,
-                rather than relying only on the event ID.
-            </p>
-
-            <div class="severity">
-                <h3>Failed Authentication — Medium</h3>
-
-                <p>
-                    A single failed authentication attempt does not necessarily
-                    indicate malicious activity. Repeated failures involving
-                    unusual accounts, hosts or sources may require additional
-                    investigation.
-                </p>
+            <div class="skill-number">
+                02
             </div>
 
-            <div class="severity">
-                <h3>PowerShell Activity — Medium to High</h3>
+            <h4>
+                Threat Hunting
+            </h4>
 
-                <p>
-                    PowerShell can be used for legitimate administration.
-                    Suspicious commands, unusual execution context or
-                    unexpected parent processes can increase the investigation
-                    priority.
-                </p>
+            <p>
+                Event investigation,
+                telemetry validation and detection analysis.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">
+                03
             </div>
 
-            <div class="severity">
-                <h3>Process Creation — Medium</h3>
+            <h4>
+                Windows Security
+            </h4>
 
-                <p>
-                    Process creation is normal Windows activity. Investigation
-                    priority depends on the process, command line, execution
-                    location and parent process.
-                </p>
+            <p>
+                Windows Event Logs, authentication,
+                Defender and endpoint security.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">
+                04
             </div>
 
-            <div class="severity">
-                <h3>Firewall Visibility Gap — Medium</h3>
+            <h4>
+                PowerShell
+            </h4>
 
-                <p>
-                    A firewall monitoring blind spot can reduce visibility into
-                    network activity. The actual risk depends on which traffic
-                    and systems are affected.
-                </p>
+            <p>
+                Security configuration,
+                automation and telemetry testing.
+            </p>
+
+        </div>
+
+
+        <div class="skill">
+
+            <div class="skill-number">
+                05
             </div>
-        </section>
 
-
-        <!-- LIMITATIONS -->
-
-        <section id="limitations">
-            <h2>8. What Worked and What Did Not Work</h2>
-
-            <h3>What Worked</h3>
-
-            <ul>
-                <li>Wazuh provided centralized endpoint monitoring.</li>
-                <li>Windows authentication events were available for review.</li>
-                <li>Successful logon activity could be monitored.</li>
-                <li>Failed logon activity could be monitored.</li>
-                <li>PowerShell-related activity could be investigated.</li>
-                <li>Process creation telemetry was available.</li>
-                <li>Windows Defender events provided additional context.</li>
-            </ul>
-
-            <h3>What Did Not Work / Limitations</h3>
-
-            <ul>
-                <li>
-                    Not every Windows event provides enough information for
-                    a complete investigation by itself.
-                </li>
-
-                <li>
-                    Missing or disabled audit policies can create visibility gaps.
-                </li>
-
-                <li>
-                    Some investigations require additional logging and correlation.
-                </li>
-
-                <li>
-                    A single event should not automatically be considered proof
-                    of malicious activity.
-                </li>
-
-                <li>
-                    Firewall visibility may be limited when appropriate logging
-                    is unavailable.
-                </li>
-            </ul>
-        </section>
-
-
-        <!-- SOC ANALYST APPROACH -->
-
-        <section>
-            <h2>9. SOC Analyst Investigation Approach</h2>
+            <h4>
+                Security Hardening
+            </h4>
 
             <p>
-                When a suspicious event is identified, a SOC analyst should
-                investigate the surrounding context rather than making a
-                decision based on a single event.
+                CIS-aligned configuration assessment
+                and Windows security hardening.
             </p>
 
-            <ol>
-                <li>Identify the affected host.</li>
-                <li>Identify the account involved.</li>
-                <li>Review the event timestamp.</li>
-                <li>Review related authentication events.</li>
-                <li>Check process and parent-process information.</li>
-                <li>Review PowerShell or command-line activity when available.</li>
-                <li>Check related endpoint security events.</li>
-                <li>Look for repeated or correlated activity.</li>
-                <li>Determine whether the activity is expected or suspicious.</li>
-                <li>Assign an appropriate severity based on the available evidence.</li>
-            </ol>
-        </section>
+        </div>
 
 
-        <!-- CONCLUSION -->
+        <div class="skill">
 
-        <section id="conclusion">
-            <h2>10. Conclusion</h2>
+            <div class="skill-number">
+                06
+            </div>
+
+            <h4>
+                Virtualization
+            </h4>
 
             <p>
-                This lab demonstrated how Wazuh can be used to monitor Windows
-                security telemetry and provide centralized visibility for
-                security investigations.
+                VMware, Ubuntu Linux and
+                Windows laboratory environments.
             </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     APPROACH
+========================== -->
+
+<section>
+
+    <div class="section-label">
+        04 — Approach
+    </div>
+
+    <h2 class="section-title">
+        How I approach<br>
+        <span class="gold">security.</span>
+    </h2>
+
+    <div class="approach">
+
+        <div class="approach-item">
+
+            <h4>
+                Observe
+            </h4>
 
             <p>
-                The evidence covered authentication events, PowerShell activity,
-                application events, Windows Defender telemetry, process
-                creation and a simulated firewall monitoring limitation.
+                Understand what is happening on the
+                endpoint and identify available telemetry.
             </p>
+
+        </div>
+
+
+        <div class="approach-item">
+
+            <h4>
+                Investigate
+            </h4>
 
             <p>
-                The exercise also demonstrated the importance of appropriate
-                logging and event correlation. Effective SIEM monitoring
-                depends on the quality and completeness of the telemetry
-                available to the monitoring platform.
+                Compare endpoint events with SIEM
+                visibility and investigate detection behavior.
             </p>
+
+        </div>
+
+
+        <div class="approach-item">
+
+            <h4>
+                Improve
+            </h4>
 
             <p>
-                From a SOC analyst perspective, suspicious activity should be
-                correlated with the affected host, account, timestamp, process,
-                command line and related events before determining whether it
-                represents a genuine security incident.
+                Address telemetry gaps, strengthen
+                security controls and document findings.
             </p>
-        </section>
 
-    </main>
+        </div>
+
+    </div>
+
+</section>
 
 
-    <footer>
-        <p><strong>Windows Security Monitoring with Wazuh</strong></p>
-        <p>SIEM Monitoring • Windows Event Logs • Endpoint Security Analysis</p>
-    </footer>
+<!-- =========================
+     CONTACT
+========================== -->
+
+<section id="contact" class="contact">
+
+    <div class="section-label">
+        05 — Contact
+    </div>
+
+    <h2>
+        Let's connect.
+    </h2>
+
+    <p>
+        Interested in cybersecurity, SOC operations,
+        SIEM monitoring, threat hunting and defensive security.
+    </p>
+
+    <div class="contact-links">
+
+        <a
+            class="button button-filled"
+            href="https://github.com/mouryareddy462"
+            target="_blank">
+            GitHub
+        </a>
+
+        <!--
+        Replace YOUR-LINKEDIN-URL with your actual LinkedIn URL.
+        -->
+
+        <a
+            class="button"
+            href="YOUR-LINKEDIN-URL"
+            target="_blank">
+            LinkedIn
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================== -->
+
+<footer>
+
+    © 2026 Mourya Reddy
+
+    <br>
+
+    CYBERSECURITY • SOC • SIEM • THREAT HUNTING
+
+</footer>
+
 
 </body>
 </html>
